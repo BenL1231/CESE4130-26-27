@@ -32,7 +32,7 @@ module road_sign(
         next_mode = mode;
         case (mode)
             idle: begin
-                if      (btn[0]) next_mode = left;
+                if (btn[0]) next_mode = left;
                 else if (btn[1]) next_mode = right;
                 else if (btn[2]) next_mode = warning;
             end
