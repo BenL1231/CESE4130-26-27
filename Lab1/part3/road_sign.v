@@ -1,10 +1,10 @@
 `timescale 1ns / 1ps
 
 module road_sign(
-    input wire clk,       // Clock signal
-    input wire reset,     // Reset signal to restart the FSM
-    input wire [3:0] btn, // 4-bit input register (btn[0], btn[1], btn[2], btn[3])
-    output reg [3:0] led, // 4-bit output register
+    input wire clk,       
+    input wire reset,     
+    input wire [3:0] btn, //  (btn[0], btn[1], btn[2], btn[3])
+    output reg [3:0] led, 
     output reg [2:0] rgb_led
 );
 
@@ -18,7 +18,6 @@ module road_sign(
 
     wire [3:0] led_l, led_r, led_w;
 
-    // Submodule Instantiations with isolated output wires
     left l (
         .clk(clk),
         .reset(reset),
@@ -40,7 +39,7 @@ module road_sign(
         .led(led_w)
     );
 
-    // Sequential State Register
+   
     always @(posedge clk) begin
         if (reset)
             mode <= idle;
@@ -48,9 +47,9 @@ module road_sign(
             mode <= next_mode;
     end
 
-    // Next State Logic
+    
     always @(*) begin
-        next_mode = mode; // Default stay in current state
+        next_mode = mode; 
         case (mode)
             idle: begin
                 if (btn[0])      next_mode = left;
@@ -59,7 +58,7 @@ module road_sign(
             end
 
             left, right, warning: begin
-                if (btn[3])      next_mode = idle; // Fixed index from btn[4] to btn[3]
+                if (btn[3])      next_mode = idle; 
             end
 
             default: next_mode = idle;
